@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>House Price Prediction</h1>
+        <form method="post">
+            <input type="number" name="Bedroom" placeholder="Bedrooms" required>
+            <input type="number" name="Space" placeholder="Space (sq ft)" required>
+            <input type="number" name="Room" placeholder="Total Rooms" required>
+            <input type="number" name="Lot" placeholder="Lot Size" required>
+            <input type="number" name="Tax" placeholder="Tax" required>
+            <input type="number" name="Bathroom" placeholder="Bathrooms" required>
+            <input type="number" name="Garage" placeholder="Garage Spaces" required>
+            <input type="number" name="Condition" placeholder="Condition (1-5)" required>
+            <button type="submit">Predict Price</button>
+        </form>
+
+        {% if prediction %}
+            <div class="prediction-box">
+                Predicted Price: ${{ prediction }}
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error-box">
+                Error: {{ error }}
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
