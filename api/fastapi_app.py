@@ -1,16 +1,29 @@
-from fastapi import FastAPI
+import os
 import joblib
 import pandas as pd
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 # Initialize FastAPI
 app = FastAPI()
 
-# Load the trained model and scaler
-model = joblib.load("../models/house_price_model.pkl")
-scaler = joblib.load("../models/scaler.pkl")
+# Get absolute path for the model
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
+MODEL_PATH = os.path.join(BASE_DIR, "../models/house_price_model.pkl")
+SCALER_PATH = os.path.join(BASE_DIR, "../models/scaler.pkl")
 
-# Define the expected input data format
+# Debugging: Check if files exist before loading
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(f"Model file not found at {MODEL_PATH}")
+
+if not os.path.exists(SCALER_PATH):
+    raise FileNotFoundError(f"Scaler file not found at {SCALER_PATH}")
+
+# Load the trained model and scaler
+model = joblib.load(MODEL_PATH)
+scaler = joblib.load(SCALER_PATH)
+
+# Define input format
 class HouseFeatures(BaseModel):
     Bedroom: float
     Space: float
