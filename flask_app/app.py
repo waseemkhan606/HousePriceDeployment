@@ -1,19 +1,28 @@
 from flask import Flask, render_template, request
 import requests
-import logging
 import time
+import logging
+import os
 
 app = Flask(__name__)
 
 # Define FastAPI endpoint
-FASTAPI_URL = "http://127.0.0.1:8000/predict/"
+FASTAPI_URL = "http://fastapi:8000/predict/"
+
+
+# Ensure log directory exists
+log_dir = "flask_app/logs"
+os.makedirs(log_dir, exist_ok=True)
 
 # Configure Logging
 logging.basicConfig(
-    filename="logs/app_logs.log",  # Log file path
-    level=logging.INFO,  # Log only important information
-    format="%(asctime)s - %(levelname)s - %(message)s",
+    filename=os.path.join(log_dir, "app_logs.log"),  # Store logs in a proper directory
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
 )
+
+logging.info("Flask app started successfully!")
+
 
 @app.route("/", methods=["GET", "POST"])
 def home():
